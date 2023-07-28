@@ -4,16 +4,69 @@
 	<meta charset="utf-8">
 	<script>
 		// TODO: create a handler
-    window.addEventListener("load", function(){
-        // TODO: register the handler
-    });
+		let actions = {
+			google:'https://www.google.com/search',
+			duckDuckGo: 'https://duckduckgo.com',
+			bing: 'https://www.bing.com/search',
+			ask: 'https://www.ask.com/web'
+		}
+		function setSearchEngine(){
+			const buttonselected = document.querySelector('input[name=engine]:checked');
+			const query = document.getElementById("q");
+			const form = document.getElementById("searchForm");
+			
+
+			//Bonus -Mission part 1 - add Validation
+
+			//Option 1: use window alert
+			if(query.value.trim()=== ''){
+				alert("You didn't enter anything to search for");
+				event.preventDefault()
+			}else if(!buttonselected){
+				alert("which search engine do you want use?");
+				event.preventDefault()
+			}
+
+			//Option 2: use an error box on the page with text
+
+			const errorBox = document.getElementById("error-box");
+			const errorMessage = document.getElementById("error-message");
+			if(query.value.trim()=== ''){
+				errorMessage.innerHTML = "You didn't enter anything to search for";
+				event.preventDefault()
+			}else if(!buttonselected){
+				errorMessage.innerHTML = "which search engine do you want use?";
+				event.preventDefault()
+			}
+
+			let url = actions[buttonselected.value];
+			form.action = url;
+		}
+
+		window.addEventListener("load", function(){
+			// TODO: register the handler
+			const form = document.getElementById("searchForm");
+			form.addEventListener("submit", setSearchEngine);
+		});
 	</script>
 </head>
 
 <body>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
-	</form>
+		<form id="searchForm" target="_blank"> 
+		<!-- TODO: add form elements -->
+		<input type="text" id="q" name="q"/> <!--Create a text input within the form and set its name attribute to the value "q"-->
+		<label><input type="Radio" name="engine" value="google"/>Google</label>
+		<label><input type="Radio" name="engine" value="duckduckGo"/>DuckduckGo</label>
+		<label><input type="Radio" name="engine" value="bing"/>Bing</label>
+		<label><input type="Radio" name="engine" value="ask"/>Ask</label>
+		<button id ="submit" value="Go!">Go!</button>
+		</form>
+	
+		<!--Bonus -Mission part 1 - Option 2 -->
+
+		<div id="error-box">
+			<p id="error-message"></p>
+		</div>
 
 </body>
